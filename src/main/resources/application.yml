@@ -1,0 +1,11 @@
+server:
+  error:
+    whitelabel:
+      enabled: true
+  servlet:
+    encoding:
+      force: true
+  port: 8080
+spring:
+  profiles:
+    active: "dev"
