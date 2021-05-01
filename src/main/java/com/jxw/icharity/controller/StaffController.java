@@ -4,9 +4,9 @@ import com.jxw.icharity.domain.Staff;
 import com.jxw.icharity.form.StaffForm;
 import com.jxw.icharity.service.StaffService;
 import com.jxw.icharity.vo.ResponseVo;
-import com.jxw.icharity.vo.StaffVo;
+import com.jxw.icharity.vo.staff.StaffListVo;
+import com.jxw.icharity.vo.staff.StaffVo;
 import com.jxw.icharity.vo.service.WebStaffService;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -34,12 +34,12 @@ public class StaffController {
     }
 
     @GetMapping("/list")
-    public ResponseVo<List<StaffVo>>list(){
-        List<StaffVo>res=new ArrayList<>();
+    public ResponseVo<List<StaffListVo>>list(){
+        List<StaffListVo>res=new ArrayList<>();
         List<Staff>searchRes=staffService.findAll();
         if(searchRes!=null&&!searchRes.isEmpty()){
             for(Staff staff:searchRes){
-                res.add(webStaffService.convertStaff2StaffVo(staff));
+                res.add(webStaffService.convertStaff2StaffListVo(staff));
             }
         }
         return ResponseVo.success(res);

@@ -2,9 +2,8 @@ package com.jxw.icharity.vo.service;
 
 import com.jxw.icharity.domain.Project;
 import com.jxw.icharity.domain.Staff;
-import com.jxw.icharity.vo.ProjectVo;
-import com.jxw.icharity.vo.StaffVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.jxw.icharity.vo.project.ProjectListVo;
+import com.jxw.icharity.vo.project.ProjectVo;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -37,5 +36,12 @@ public class WebProjectService {
         }
         vo.setRelated_staff(staffMemberVos);
         return vo;
+    }
+
+    public ProjectListVo convertProject2ProjectListVo(Project project){
+        return ProjectListVo.builder()
+                .id(project.getId())
+                .name(project.getName())
+                .build();
     }
 }

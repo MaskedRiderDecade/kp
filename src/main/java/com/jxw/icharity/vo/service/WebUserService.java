@@ -1,7 +1,7 @@
 package com.jxw.icharity.vo.service;
 
 import com.jxw.icharity.domain.User;
-import com.jxw.icharity.vo.UserVo;
+import com.jxw.icharity.vo.user.UserVo;
 import org.springframework.stereotype.Service;
 
 @Service

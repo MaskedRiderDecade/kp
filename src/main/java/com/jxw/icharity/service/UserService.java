@@ -3,9 +3,8 @@ package com.jxw.icharity.service;
 import com.jxw.icharity.domain.User;
 import com.jxw.icharity.enums.ResponseEnum;
 import com.jxw.icharity.repository.UserRepo;
-import com.jxw.icharity.vo.LoginUserVo;
+import com.jxw.icharity.vo.user.LoginUserVo;
 import com.jxw.icharity.vo.ResponseVo;
-import com.jxw.icharity.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 @Service
 @Slf4j

@@ -3,9 +3,9 @@ package com.jxw.icharity.controller;
 import com.jxw.icharity.domain.User;
 import com.jxw.icharity.enums.ResponseEnum;
 import com.jxw.icharity.service.UserService;
-import com.jxw.icharity.vo.LoginUserVo;
+import com.jxw.icharity.vo.user.LoginUserVo;
 import com.jxw.icharity.vo.ResponseVo;
-import com.jxw.icharity.vo.UserVo;
+import com.jxw.icharity.vo.user.UserVo;
 import com.jxw.icharity.vo.service.WebUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.jxw.icharity.constants.Constants.USERNAME;

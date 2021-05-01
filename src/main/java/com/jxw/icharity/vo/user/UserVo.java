@@ -1,4 +1,4 @@
-package com.jxw.icharity.vo;
+package com.jxw.icharity.vo.user;
 
 import lombok.Builder;
 import lombok.Data;

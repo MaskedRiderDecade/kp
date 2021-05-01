@@ -3,7 +3,8 @@ package com.jxw.icharity.controller;
 import com.jxw.icharity.domain.Project;
 import com.jxw.icharity.form.ProjectForm;
 import com.jxw.icharity.service.ProjectService;
-import com.jxw.icharity.vo.ProjectVo;
+import com.jxw.icharity.vo.project.ProjectListVo;
+import com.jxw.icharity.vo.project.ProjectVo;
 import com.jxw.icharity.vo.ResponseVo;
 import com.jxw.icharity.vo.service.WebProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,12 @@ public class ProjectController {
     }
 
     @GetMapping("/list")
-    public ResponseVo<List<ProjectVo>> getAllProjects(){
+    public ResponseVo<List<ProjectListVo>> getAllProjects(){
         List<Project>searchRes=projectService.findAll();
-        List<ProjectVo>res=new ArrayList<>();
+        List<ProjectListVo>res=new ArrayList<>();
         if(searchRes!=null&&!searchRes.isEmpty()){
             for(Project project:searchRes){
-                res.add(webProjectService.convertProject2ProjectVo(project));
+                res.add(webProjectService.convertProject2ProjectListVo(project));
             }
         }
         return ResponseVo.success(res);

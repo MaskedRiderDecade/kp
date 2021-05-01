@@ -3,7 +3,8 @@ package com.jxw.icharity.vo.service;
 import com.jxw.icharity.domain.Project;
 import com.jxw.icharity.domain.Staff;
 import com.jxw.icharity.form.StaffForm;
-import com.jxw.icharity.vo.StaffVo;
+import com.jxw.icharity.vo.staff.StaffListVo;
+import com.jxw.icharity.vo.staff.StaffVo;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -48,6 +49,13 @@ public class WebStaffService {
         }
         vo.setRelated_projects(projectMemberVos);
         return vo;
+    }
+
+    public StaffListVo convertStaff2StaffListVo(Staff staff){
+        return StaffListVo.builder()
+                .id(staff.getId())
+                .name(staff.getName())
+                .build();
     }
 
 }
