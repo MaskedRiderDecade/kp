@@ -15,6 +15,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -46,7 +47,7 @@ public class UserService {
         Assert.notNull(saveResult,"保存失败");
     }
 
-    public ResponseVo<String> login(LoginUserVo loginUserVo){
+    public ResponseVo<User> login(LoginUserVo loginUserVo){
         validLogin(loginUserVo);
         User user=userRepo.getUserByUsername(loginUserVo.getUsername());
         if(user==null){
@@ -56,7 +57,7 @@ public class UserService {
                 DigestUtils.md5DigestAsHex(loginUserVo.getPassword().getBytes(StandardCharsets.UTF_8)))){
             return ResponseVo.error(ResponseEnum.USERNAME_OR_PASSWORD_ERROR);
         }
-        return ResponseVo.success(user.getUsername());
+        return ResponseVo.success(user);
     }
 
     public User getUserInfo(Integer id){

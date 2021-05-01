@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.jxw.icharity.constants.Constants.USERNAME;
+import static com.jxw.icharity.constants.Constants.USER_ID;
 
 @RestController
 public class UserController {
@@ -34,23 +35,23 @@ public class UserController {
     }
 
     @GetMapping("/userInfo")
-    public ResponseVo<UserVo> getUserInfo(Integer id){
-        Assert.notNull(id,"userId不能为空");
-        return ResponseVo.success(webUserService.convertUser2UserVo(userService.getUserInfo(id)));
+    public ResponseVo<UserVo> getUserInfo(Integer user_id){
+        Assert.notNull(user_id,"userId不能为空");
+        return ResponseVo.success(webUserService.convertUser2UserVo(userService.getUserInfo(user_id)));
     }
 
     @PostMapping("/login")
-    public ResponseVo<String>login(@RequestBody LoginUserVo loginUserVo, HttpSession session){
+    public ResponseVo login(@RequestBody LoginUserVo loginUserVo, HttpSession session){
 
-        ResponseVo<String> responseVo=userService.login(loginUserVo);
+        ResponseVo<User> responseVo=userService.login(loginUserVo);
 
         if(responseVo.getStatus().equals(ResponseEnum.SUCCESS.getCode())){
-            session.setAttribute(USERNAME,responseVo.getData());
+            session.setAttribute(USERNAME,responseVo.getData().getUsername());
+            session.setAttribute(USER_ID,responseVo.getData().getId());
+            return ResponseVo.success();
         }
 
         return responseVo;
-
-
     }
 
 }

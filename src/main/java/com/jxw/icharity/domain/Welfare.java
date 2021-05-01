@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Builder
@@ -13,8 +17,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "welfare")
-public class Welfare {
-
+@DynamicInsert
+@DynamicUpdate
+public class Welfare implements Serializable {
+    private static final long serialVersionUID = -3989118638598099340L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -37,5 +43,9 @@ public class Welfare {
     @OneToOne
     @JoinColumn(name="project_id")
     private Project project;
+
+    private Date ctime;
+
+    private Date mtime;
 
 }

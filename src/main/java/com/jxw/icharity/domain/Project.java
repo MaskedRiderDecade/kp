@@ -4,18 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
-@Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "project")
-public class Project {
+@DynamicInsert
+@DynamicUpdate
+public class Project implements Serializable {
+    private static final long serialVersionUID = 6312825669942046779L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -36,7 +41,75 @@ public class Project {
 
     //表的多对多关系
     @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(name="manager",joinColumns=@JoinColumn(name="project_id"),
-            inverseJoinColumns = @JoinColumn(name="staff_id"))
+    @JoinTable(name="manager",joinColumns=@JoinColumn(name="project_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="staff_id",referencedColumnName = "id"))
     private Set<Staff> staff;
+
+    private Date ctime;
+
+    private Date mtime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Set<Staff> getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Set<Staff> staff) {
+        this.staff = staff;
+    }
 }
