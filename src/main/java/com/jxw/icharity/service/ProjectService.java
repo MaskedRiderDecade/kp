@@ -2,6 +2,7 @@ package com.jxw.icharity.service;
 
 import com.jxw.icharity.domain.Project;
 import com.jxw.icharity.domain.Staff;
+import com.jxw.icharity.exception.DBNotFoundException;
 import com.jxw.icharity.form.ProjectForm;
 import com.jxw.icharity.repository.ProjectRepo;
 import com.jxw.icharity.repository.StaffRepo;
@@ -9,6 +10,7 @@ import com.jxw.icharity.vo.ResponseVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,8 +36,8 @@ public class ProjectService {
 
     public Project findProject(Integer id){
 
-        return projectRepo.findById(id).orElse(null);
-
+        return projectRepo.findById(id).orElseThrow(()->{throw new DBNotFoundException();
+        });
     }
 
     public ResponseVo saveProject(ProjectForm projectForm) throws ParseException {
@@ -58,8 +60,19 @@ public class ProjectService {
             Set<Staff> staffs = new HashSet<>(staffSearchResult);
             project.setStaff(staffs);
         }
+        validProject(project);
         projectRepo.save(project);
         return ResponseVo.success();
+    }
+
+    private void validProject(Project project){
+        Assert.notNull(project.getName(),"项目名称不能为空");
+        Assert.notNull(project.getAmount(),"项目金额不能为空");
+        Assert.notNull(project.getRegion(),"项目地区不能为空");
+        Assert.notNull(project.getType(),"项目类型不能为空");
+        Assert.notNull(project.getStartTime(),"项目开始时间不能为空");
+        Assert.notNull(project.getEndTime(),"项目结束时间不能为空");
+
     }
 
 }

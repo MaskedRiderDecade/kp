@@ -32,7 +32,7 @@ public class Finance implements Serializable {
     private Project project;
 
     @Column(name = "create_time")
-    private Integer createTime;
+    private Date createTime;
 
     private Integer type;
 

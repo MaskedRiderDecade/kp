@@ -82,4 +82,12 @@ public class Staff implements Serializable {
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
+
+    public Date getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(Date mtime) {
+        this.mtime = mtime;
+    }
 }

@@ -49,9 +49,6 @@ public class StaffController {
     public ResponseVo<StaffVo>getStaff(Integer staff_id){
         Assert.notNull(staff_id,"staffId不能为空");
         Staff staff=staffService.findById(staff_id);
-        if(staff==null){
-            return ResponseVo.error(NOT_FOUND_MSG);
-        }
         return ResponseVo.success(webStaffService.convertStaff2StaffVo(staff));
     }
 

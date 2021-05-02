@@ -31,9 +31,6 @@ public class ProjectController {
     public ResponseVo<ProjectVo>getProject(Integer project_id){
         Assert.notNull(project_id,"projectId不能为空");
         Project project=projectService.findProject(project_id);
-        if(project==null){
-            return ResponseVo.error(NOT_FOUND_MSG);
-        }
         return ResponseVo.success(webProjectService.convertProject2ProjectVo(project));
     }
 

@@ -33,10 +33,10 @@ public class UserController {
         userService.register(user);
     }
 
-    @GetMapping("/userInfo")
-    public ResponseVo<UserVo> getUserInfo(Integer user_id){
-        Assert.notNull(user_id,"userId不能为空");
-        return ResponseVo.success(webUserService.convertUser2UserVo(userService.getUserInfo(user_id)));
+    @GetMapping("/user")
+    public ResponseVo<UserVo> getUserInfo(HttpSession session){
+        Assert.notNull(session.getAttribute(USER_ID),"还未登录，请先登录");
+        return ResponseVo.success(webUserService.convertUser2UserVo(userService.getUserInfo((Integer) session.getAttribute(USER_ID))));
     }
 
     @PostMapping("/login")
@@ -51,6 +51,17 @@ public class UserController {
         }
 
         return responseVo;
+    }
+
+    @PostMapping("/logout")
+    public ResponseVo logout( HttpSession session){
+        if(session.getAttribute(USERNAME)!=null){
+            session.removeAttribute(USERNAME);
+        }
+        if(session.getAttribute(USER_ID)!=null){
+            session.removeAttribute(USER_ID);
+        }
+        return ResponseVo.success();
     }
 
 }
