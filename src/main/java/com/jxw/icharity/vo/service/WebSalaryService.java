@@ -4,9 +4,11 @@ import com.jxw.icharity.domain.Salary;
 import com.jxw.icharity.domain.Staff;
 import com.jxw.icharity.exception.DBNotFoundException;
 import com.jxw.icharity.form.SalaryForm;
-import com.jxw.icharity.form.StaffForm;
 import com.jxw.icharity.repository.StaffRepo;
+import com.jxw.icharity.vo.salary.SalaryStaffVo;
 import com.jxw.icharity.vo.salary.SalaryVo;
+import com.jxw.icharity.vo.staff.StaffListVo;
+import com.jxw.icharity.vo.staff.StaffVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +26,27 @@ public class WebSalaryService {
         return Salary.builder()
                 .amount(form.getAmount())
                 .createTime(sdf.parse(form.getCreate_time()))
-                .staff(staffRepo.findById(form.getStaff_id()).orElseThrow(()->{throw new DBNotFoundException();
+                .staff(staffRepo.findById(form.getStaff_id()).<DBNotFoundException>orElseThrow(()->{throw new DBNotFoundException();
                 }))
                 .build();
     }
 
-    public SalaryVo convertSalary2SalaryVo(Salary salary){
+    public SalaryStaffVo convertSalary2SalaryStaffVo(Salary salary){
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        return SalaryVo.builder()
+        return SalaryStaffVo.builder()
+                .id(salary.getId())
                 .create_time(sdf.format(salary.getCreateTime()))
                 .amount(salary.getAmount())
+                .build();
+    }
+
+    public SalaryVo convertSalary2SalaryVo(Salary salary, StaffListVo staffListVo){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        return SalaryVo.builder()
+                .id(salary.getId())
+                .create_time(sdf.format(salary.getCreateTime()))
+                .amount(salary.getAmount())
+                .staffListVo(staffListVo)
                 .build();
     }
 

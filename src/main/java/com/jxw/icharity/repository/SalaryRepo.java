@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface SalaryRepo extends CrudRepository<Salary, Integer> {
 
-    List<Salary>findByStaffOrderByCreateTimeDesc(Staff staff);
+    List<Salary>findByStaffOrderByCreateTimeAsc(Staff staff);
+
+    List<Salary>findAllByIdGreaterThanEqualOrderByCreateTimeAsc(Integer id);
 }

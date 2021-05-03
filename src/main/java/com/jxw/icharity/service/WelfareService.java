@@ -26,9 +26,9 @@ public class WelfareService {
         return ResponseVo.success();
     }
 
-    public List<Welfare>findByProjectId(Integer project_id){
+    public List<Welfare>findByProjectId(Integer project_id)throws DBNotFoundException{
         Assert.notNull(project_id);
-        return welfareRepo.findByProjectOrderByCtimeDesc(projectRepo.findById(project_id).orElseThrow(()->{throw new DBNotFoundException();
+        return welfareRepo.findByProjectOrderByCtimeDesc(projectRepo.findById(project_id).<DBNotFoundException>orElseThrow(()->{throw new DBNotFoundException();
         }));
     }
 

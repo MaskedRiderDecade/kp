@@ -10,4 +10,6 @@ public interface WelfareRepo extends CrudRepository<Welfare,Integer> {
 
     List<Welfare>findByProjectOrderByCtimeDesc(Project project);
 
+    List<Welfare>findByProjectIn(List<Project>projects);
+
 }

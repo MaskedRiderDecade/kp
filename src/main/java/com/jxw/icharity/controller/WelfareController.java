@@ -1,6 +1,7 @@
 package com.jxw.icharity.controller;
 
 import com.jxw.icharity.domain.Welfare;
+import com.jxw.icharity.exception.DBNotFoundException;
 import com.jxw.icharity.form.WelfareForm;
 import com.jxw.icharity.service.WelfareService;
 import com.jxw.icharity.vo.ResponseVo;

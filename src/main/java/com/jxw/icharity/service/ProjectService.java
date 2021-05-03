@@ -2,10 +2,15 @@ package com.jxw.icharity.service;
 
 import com.jxw.icharity.domain.Project;
 import com.jxw.icharity.domain.Staff;
+import com.jxw.icharity.domain.Welfare;
 import com.jxw.icharity.exception.DBNotFoundException;
 import com.jxw.icharity.form.ProjectForm;
+import com.jxw.icharity.form.TimeRangeForm;
 import com.jxw.icharity.repository.ProjectRepo;
 import com.jxw.icharity.repository.StaffRepo;
+import com.jxw.icharity.repository.WelfareRepo;
+import com.jxw.icharity.service.dto.ProjectAnalysisDto;
+import com.jxw.icharity.util.TimeRangeDate;
 import com.jxw.icharity.vo.ResponseVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +19,7 @@ import org.springframework.util.Assert;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.jxw.icharity.constants.Constants.NOT_FOUND_MSG;
 
@@ -30,14 +32,45 @@ public class ProjectService {
     @Autowired
     private StaffRepo staffRepo;
 
+    @Autowired
+    private WelfareRepo welfareRepo;
+
     public List<Project> findAll(){
         return projectRepo.findAll();
     }
 
     public Project findProject(Integer id){
 
-        return projectRepo.findById(id).orElseThrow(()->{throw new DBNotFoundException();
+        return projectRepo.findById(id).<DBNotFoundException>orElseThrow(()->{throw new DBNotFoundException();
         });
+    }
+
+    public List<ProjectAnalysisDto> analysis(TimeRangeForm form) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Assert.notNull(form.getStart_time(),"起始时间不可为空");
+        Assert.notNull(form.getEnd_time(),"结束时间不可为空");
+        TimeRangeDate timeRange= TimeRangeDate.builder()
+                .startTime(sdf.parse(form.getStart_time()))
+                .endTime(sdf.parse(form.getEnd_time()))
+                .build();
+        List<ProjectAnalysisDto>projectAnalysisDtos=new ArrayList<>();
+        List<Project>projects=projectRepo.findProjectByStartTimeBetween(timeRange.getStartTime(),timeRange.getEndTime());
+        Map<Integer,Integer> projectIndexMap=new HashMap<>();
+        List<Welfare>welfares=welfareRepo.findByProjectIn(projects);
+        for(int i=0;i<projects.size();i++){
+            projectAnalysisDtos.add(ProjectAnalysisDto.builder()
+            .project(projects.get(i))
+            .welfares(new ArrayList<>())
+            .build());
+            projectIndexMap.put(projects.get(i).getId(),i);
+        }
+        for(Welfare welfare:welfares){
+            Integer index=projectIndexMap.get(welfare.getProject().getId());
+            List<Welfare>welfareTarget=projectAnalysisDtos.get(index).getWelfares();
+            welfareTarget.add(welfare);
+        }
+        return projectAnalysisDtos;
+
     }
 
     public ResponseVo saveProject(ProjectForm projectForm) throws ParseException {

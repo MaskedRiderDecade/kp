@@ -19,4 +19,6 @@ public interface ProjectRepo extends CrudRepository<Project,Integer> {
 
     List<Project> findByIdIn(List<Integer>ids);
 
+    List<Project>findProjectByStartTimeBetween(Date startTime, Date endTime);
+
 }

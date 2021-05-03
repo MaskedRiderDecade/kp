@@ -1,7 +1,9 @@
 package com.jxw.icharity.controller;
 
 import com.jxw.icharity.domain.Finance;
+import com.jxw.icharity.exception.DBNotFoundException;
 import com.jxw.icharity.form.FinanceForm;
+import com.jxw.icharity.form.TimeRangeForm;
 import com.jxw.icharity.service.FinanceService;
 import com.jxw.icharity.vo.finance.FinanceVo;
 import com.jxw.icharity.vo.ResponseVo;
@@ -38,6 +40,13 @@ public class FinanceController {
             }
         }
         return ResponseVo.success(res);
+    }
+
+    @PostMapping("/analysis")
+    public ResponseVo analysis(@RequestBody TimeRangeForm form) throws ParseException {
+        return ResponseVo.success(
+                webFinanceService.convertFinances2FinanceAnlysisVo(
+                 financeService.findByTimeRange(form)));
     }
 
 }

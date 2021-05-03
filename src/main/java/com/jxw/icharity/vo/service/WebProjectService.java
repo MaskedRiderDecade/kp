@@ -2,6 +2,8 @@ package com.jxw.icharity.vo.service;
 
 import com.jxw.icharity.domain.Project;
 import com.jxw.icharity.domain.Staff;
+import com.jxw.icharity.service.dto.ProjectAnalysisDto;
+import com.jxw.icharity.vo.project.ProjectAnalysisVo;
 import com.jxw.icharity.vo.project.ProjectListVo;
 import com.jxw.icharity.vo.project.ProjectVo;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,13 @@ public class WebProjectService {
         return ProjectListVo.builder()
                 .id(project.getId())
                 .name(project.getName())
+                .build();
+    }
+
+    public ProjectAnalysisVo convertProjectAnalysisDto2Vo(ProjectAnalysisDto dto){
+        return ProjectAnalysisVo.builder()
+                .projectListVo(convertProject2ProjectListVo(dto.getProject()))
+                .welfareVos(new ArrayList<>())
                 .build();
     }
 }

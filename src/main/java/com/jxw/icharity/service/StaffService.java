@@ -20,7 +20,7 @@ public class StaffService {
     private ProjectRepo projectRepo;
 
     public Staff findById(Integer staffId){
-        return staffRepo.findById(staffId).orElseThrow(()->{throw new DBNotFoundException();
+        return staffRepo.findById(staffId).<DBNotFoundException>orElseThrow(()->{throw new DBNotFoundException();
         });
     }
 

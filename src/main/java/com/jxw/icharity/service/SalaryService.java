@@ -31,10 +31,14 @@ public class SalaryService {
         Assert.notNull(salary.getCreateTime(),"创建时间不能为空");
     }
 
-    public List<Salary>listStaffSalary(Integer staff_id){
+    public List<Salary>listStaffSalary(Integer staff_id)throws DBNotFoundException{
         Assert.notNull(staff_id,"员工id不能为空");
-        return salaryRepo.findByStaffOrderByCreateTimeDesc(staffRepo.findById(staff_id).orElseThrow(()->{throw new DBNotFoundException();
+        return salaryRepo.findByStaffOrderByCreateTimeAsc(staffRepo.findById(staff_id).<DBNotFoundException>orElseThrow(()->{throw new DBNotFoundException();
         }));
+    }
+
+    public List<Salary>list(){
+        return salaryRepo.findAllByIdGreaterThanEqualOrderByCreateTimeAsc(0);
     }
 
 }

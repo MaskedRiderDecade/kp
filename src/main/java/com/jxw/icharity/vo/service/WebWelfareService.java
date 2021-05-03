@@ -23,7 +23,7 @@ public class WebWelfareService {
                 .houseAmount(welfareForm.getHouse_amount())
                 .employAmount(welfareForm.getEmploy_amount())
                 .trafficAmount(welfareForm.getTraffic_amount())
-                .project(projectRepo.findById(welfareForm.getProject_id()).orElseThrow(()->{throw new DBNotFoundException();
+                .project(projectRepo.findById(welfareForm.getProject_id()).<DBNotFoundException>orElseThrow(()->{throw new DBNotFoundException();
                 }))
                 .build();
     }

@@ -1,17 +1,22 @@
 package com.jxw.icharity.vo.salary;
 
+import com.jxw.icharity.vo.staff.StaffListVo;
+import com.jxw.icharity.vo.staff.StaffVo;
 import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Builder
 public class SalaryVo implements Serializable {
-    private static final long serialVersionUID = 8706452647571445710L;
+    private static final long serialVersionUID = 2627131627310366585L;
+
+    private Integer id;
 
     private String create_time;
 
     private Integer amount;
+
+    private StaffListVo staffListVo;
 }
