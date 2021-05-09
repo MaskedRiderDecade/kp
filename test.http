@@ -1,0 +1,158 @@
+@host=http://localhost:8080
+###
+
+###
+POST {{host}}/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "name":"admin",
+  "password": "admin",
+  "email":"example@example.com",
+  "mobile":"13788888888"
+
+}
+
+###
+POST {{host}}/register
+Content-Type: application/json
+
+{
+  "username": "user",
+  "name":"user",
+  "password": "user",
+  "email":"user@example.com",
+  "mobile":"13711111111"
+
+}
+
+###
+# @name Login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password":"admin"
+}
+
+@token = {{Login.response.body.data.token}}
+
+###
+GET {{host}}/userInfo
+Authorization: Bearer {{token}}
+
+###
+GET {{host}}/username
+Authorization: Bearer {{token}}
+
+###
+POST {{host}}/staff/save
+Content-Type: application/json
+
+{
+  "name": "test02",
+  "entry_date":"2020-10-31",
+  "salary":"3000"
+}
+Authorization: Bearer {{token}}
+
+###
+GET {{host}}/staff?staff_id=1
+Authorization: Bearer {{token}}
+###
+GET {{host}}/staff/list
+Authorization: Bearer {{token}}
+###
+POST {{host}}/project/save
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "project02",
+  "amount":"100000",
+  "region":"北京",
+  "start_time":"2020-03-01",
+  "end_time":"2021-02-08",
+  "type":"1",
+  "staff_ids":["1","2"]
+}
+
+###
+GET {{host}}/project?project_id=2
+Authorization: Bearer {{token}}
+###
+GET {{host}}/project/list
+Authorization: Bearer {{token}}
+
+###
+POST {{host}}/project/analysis
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "start_time":"2020-01-01",
+  "end_time":"2021-02-15"
+}
+###
+POST {{host}}/salary/save
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "staff_id": "2",
+  "amount":"6500",
+  "create_time":"2020-06-01"
+}
+
+###
+GET {{host}}/salary?staff_id=2
+Authorization: Bearer {{token}}
+###
+GET {{host}}/salary/list
+Authorization: Bearer {{token}}
+###
+POST {{host}}/finance/save
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "project_id": "1",
+  "amount":"95000",
+  "create_time":"2021-01-05",
+  "type":"3"
+}
+
+###
+POST {{host}}/finance/analysis
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "start_time":"2020-01-01",
+  "end_time":"2021-02-15"
+}
+
+###
+GET {{host}}/finance?project_id=1
+Authorization: Bearer {{token}}
+###
+POST {{host}}/welfare/save
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "project_id": "1",
+  "edu_amount":"10000",
+  "med_amount":"10000",
+  "employ_amount":"10000",
+  "house_amount":"10000",
+  "traffic_amount":"10000"
+}
+
+###
+GET {{host}}/welfare?project_id=1
+Authorization: Bearer {{token}}
+
+
